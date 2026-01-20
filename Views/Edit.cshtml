@@ -1,0 +1,15 @@
+﻿@model Item
+
+<h1>Editar Item</h1>
+
+<form method="post">
+    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+    <label for="Nome">Nome:</label>
+    <input type="text" id="Nome" name="Nome" value="@Model.Nome" required />
+    <br />
+    <label for="Descricao">Descrição:</label>
+    <textarea id="Descricao" name="Descricao" required>@Model.Descricao</textarea>
+    <br />
+    <button type="submit">Salvar Alterações</button>
+</form>
+

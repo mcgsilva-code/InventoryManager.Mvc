@@ -1,0 +1,23 @@
+﻿@model List<Item>
+
+<h1>Lista de Itens</h1>
+<a href="/Item/Create">Criar Novo Item</a>
+
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Ações</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Nome</td>
+            <td>@item.Descricao</td>
+            <td>
+                <a href="/Item/Edit/@item.Id">Editar</a> |
+                <a href="/Item/Delete/@item.Id">Excluir</a>
+            </td>
+        </tr>
+    }
+</table>

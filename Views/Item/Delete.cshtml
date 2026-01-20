@@ -1,0 +1,22 @@
+﻿@model CrudMVCApp.Models.Item
+
+@{
+    ViewData["Title"] = "Excluir Item";
+}
+
+<h1>Tem certeza que deseja excluir o item?</h1>
+
+<div>
+    <strong>Nome:</strong> @Model.Nome <br />
+    <strong>Descrição:</strong> @Model.Descricao
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <button type="submit" class="btn btn-danger">Excluir</button>
+</form>
+
+
+<a href="@Url.Action("Index", "Item")" class="btn btn-secondary">Cancelar</a>
+
