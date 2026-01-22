@@ -1,18 +1,21 @@
-# InventoryManager.Mvc
+﻿# InventoryManager.Mvc
 
-Applicazione ASP.NET Core MVC che implementa funzionalit� CRUD (Creare, Leggere, Aggiornare, Eliminare) per la gestione di elementi.  
-Questo progetto mostra l'uso del pattern MVC, controller, modelli e viste Razor, con dati gestiti in memoria per scopi didattici.
+Questo è un progetto di studio sviluppato in ASP.NET Core MVC, che dimostra l'implementazione di operazioni CRUD (Crea, Leggi, Aggiorna, Elimina) utilizzando un database SQL Server reale.
 
-## Tecnologie
-- ASP.NET Core MVC
-- C#
-- Razor Views
-- Git & GitHub
+## 🚀 Tecnologie Utilizzate
 
-## Funzionalit� principali
-- Visualizzare la lista degli elementi
-- Creare, modificare ed eliminare elementi
-- Dati archiviati in memoria
+*   **Linguaggio:** C#
+*   **Framework:** ASP.NET Core MVC
+*   **Accesso Dati:** Entity Framework Core (EF Core)
+*   **Database:** SQL Server (LocalDB)
+*   **Principi:** Programmazione Orientata agli Oggetti (OOP), Clean Code
+
+## ✨ Funzionalità
+
+*   Elenco di elementi salvati nel database.
+*   Creazione di nuovi elementi.
+*   Modifica di elementi esistenti.
+*   Eliminazione di elementi.
 
 
 ## Autore
