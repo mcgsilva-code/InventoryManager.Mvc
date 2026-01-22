@@ -1,21 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CrudMVCApp.Models; // Certifique-se de importar a classe Item
-using System.Collections.Generic;
+using CrudMVCApp.Models;
+
+using System.Linq;
 
 namespace CrudMVCApp.Controllers
 {
     public class ItemController : Controller
     {
-        // Lista de itens em memória
-        private static List<Item> _itens = new List<Item>
+        
+        private readonly AppDbContext _context;
+
+        public ItemController(AppDbContext context)
         {
-            new Item { Id = 1, Nome = "Item 1", Descricao = "Descrição do item 1" },
-            new Item { Id = 2, Nome = "Item 2", Descricao = "Descrição do item 2" }
-        };
+            _context = context;
+        }
+
+        
 
         public IActionResult Index()
         {
-            return View(_itens); // Passa a lista de itens para a view
+            return View(_context.Itens.ToList()); // Usa o banco de dados
         }
 
         public IActionResult Create()
@@ -28,49 +32,51 @@ namespace CrudMVCApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                item.Id = _itens.Count + 1;
-                _itens.Add(item);
+                _context.Add(item);         
+                _context.SaveChanges();      
                 return RedirectToAction("Index");
             }
             return View(item);
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id) // Aceita ID nulo para segurança
         {
-            var item = _itens.Find(i => i.Id == id);
+            if (id == null) return NotFound();
+            var item = _context.Itens.Find(id); // Busca no banco de dados
             if (item == null) return NotFound();
             return View(item);
         }
 
         [HttpPost]
-        public IActionResult Edit(Item item)
+        public IActionResult Edit(int id, Item item)
         {
-            var index = _itens.FindIndex(i => i.Id == item.Id);
-            if (index >= 0)
+            if (id != item.Id) return NotFound();
+
+            if (ModelState.IsValid)
             {
-                _itens[index] = item;
+                _context.Update(item);       // Atualiza no contexto
+                _context.SaveChanges();      
                 return RedirectToAction("Index");
             }
             return NotFound();
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id) // Aceita ID nulo
         {
-            var item = _itens.Find(i => i.Id == id);
+            if (id == null) return NotFound();
+            var item = _context.Itens.FirstOrDefault(m => m.Id == id); // Busca no DB
             if (item == null) return NotFound();
             return View(item);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("DeleteConfirmed")]
         public IActionResult DeleteConfirmed(int id)
         {
-            var item = _itens.Find(i => i.Id == id);
-            if (item != null)
-            {
-                _itens.Remove(item);
-                return RedirectToAction("Index");
-            }
-            return NotFound();
+            var item = _context.Itens.Find(id); // Busca no DB
+            _context.Itens.Remove(item);         // Remove do contexto
+            _context.SaveChanges();              
+            return RedirectToAction("Index");
         }
     }
 }
+
